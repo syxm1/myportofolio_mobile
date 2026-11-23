@@ -1,6 +1,5 @@
-import 'package:material_ui/material_ui.dart';
-
-// TODO: Impor drawer yang sudah dibuat sebelumnya
+import 'package:flutter/material.dart';
+import 'package:myportofolio_mobile/widgets/left_drawer.dart';
 
 class ProjectFormPage extends StatefulWidget {
   const ProjectFormPage({super.key});
@@ -31,10 +30,10 @@ class _ProjectFormPageState extends State<ProjectFormPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Center(child: Text('Add Project Form')),
-        backgroundColor: Colors.indigo,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
       ),
-      // TODO: Tambahkan drawer yang sudah dibuat di sini
+      drawer: const LeftDrawer(),
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(

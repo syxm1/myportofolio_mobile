@@ -1,4 +1,8 @@
-import 'package:material_ui/material_ui.dart';
+import 'package:flutter/material.dart';
+import 'package:myportofolio_mobile/screens/certification_form.dart';
+import 'package:myportofolio_mobile/screens/education_form.dart';
+import 'package:myportofolio_mobile/screens/experience_form.dart';
+import 'package:myportofolio_mobile/screens/project_form.dart';
 import 'package:myportofolio_mobile/widgets/left_drawer.dart';
 import 'package:myportofolio_mobile/widgets/project_card.dart';
 
@@ -11,7 +15,30 @@ class MyHomePage extends StatelessWidget {
 
   final List<ItemHomepage> items = [
     ItemHomepage("Lihat Proyek", Icons.folder, Colors.red),
-    ItemHomepage("Tambah Proyek", Icons.add_circle, Colors.green),
+    ItemHomepage(
+      "Tambah Proyek",
+      Icons.add_circle,
+      Colors.green,
+      destination: (context) => const ProjectFormPage(),
+    ),
+    ItemHomepage(
+      "Tambah Edukasi",
+      Icons.school,
+      Colors.indigo,
+      destination: (context) => const EducationFormPage(),
+    ),
+    ItemHomepage(
+      "Tambah Pengalaman",
+      Icons.work,
+      Colors.teal,
+      destination: (context) => const ExperienceFormPage(),
+    ),
+    ItemHomepage(
+      "Tambah Sertifikasi",
+      Icons.verified,
+      Colors.deepPurple,
+      destination: (context) => const CertificationFormPage(),
+    ),
     ItemHomepage("Logout", Icons.logout, Colors.blue),
   ];
 
@@ -30,7 +57,7 @@ class MyHomePage extends StatelessWidget {
       ),
       drawer: const LeftDrawer(),
       // Body halaman utama dengan padding di sekelilingnya.
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -39,9 +66,9 @@ class MyHomePage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                InfoCard(title: 'NPM', content: npm),
-                InfoCard(title: 'Name', content: nama),
-                InfoCard(title: 'Class', content: kelas),
+                Expanded(child: InfoCard(title: 'NPM', content: npm)),
+                Expanded(child: InfoCard(title: 'Name', content: nama)),
+                Expanded(child: InfoCard(title: 'Class', content: kelas)),
               ],
             ),
 
@@ -64,11 +91,17 @@ class MyHomePage extends StatelessWidget {
 
                   // GridView menampilkan kartu tombol dalam tata letak kisi 3 kolom.
                   GridView.count(
-                    primary: true,
+                    primary: false,
+                    physics: const NeverScrollableScrollPhysics(),
                     padding: const EdgeInsets.all(20),
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 10,
-                    crossAxisCount: 3,
+                    crossAxisCount: MediaQuery.sizeOf(context).width < 600
+                        ? 2
+                        : 3,
+                    childAspectRatio: MediaQuery.sizeOf(context).width < 600
+                        ? 1
+                        : 1.5,
                     // shrinkWrap agar ukuran kisi menyesuaikan tinggi konten anak.
                     shrinkWrap: true,
                     children: items.map((ItemHomepage item) {
@@ -98,15 +131,13 @@ class InfoCard extends StatelessWidget {
       // Memberikan efek bayangan kartu elevasi 2 unit.
       elevation: 2.0,
       child: Container(
-        // Menyesuaikan lebar kartu dengan proporsi layar (dibagi 3.5).
-        width: MediaQuery.of(context).size.width / 3.5,
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(8.0),
         // Menyusun teks title dan content secara vertikal.
         child: Column(
           children: [
             Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
             const SizedBox(height: 8.0),
-            Text(content),
+            Text(content, textAlign: TextAlign.center),
           ],
         ),
       ),
@@ -118,6 +149,7 @@ class ItemHomepage {
   final String name;
   final IconData icon;
   final Color color;
+  final WidgetBuilder? destination;
 
-  ItemHomepage(this.name, this.icon, this.color);
+  ItemHomepage(this.name, this.icon, this.color, {this.destination});
 }
