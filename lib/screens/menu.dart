@@ -3,6 +3,7 @@ import 'package:myportofolio_mobile/screens/certification_form.dart';
 import 'package:myportofolio_mobile/screens/education_form.dart';
 import 'package:myportofolio_mobile/screens/experience_form.dart';
 import 'package:myportofolio_mobile/screens/project_form.dart';
+import 'package:myportofolio_mobile/screens/project_list_screen.dart';
 import 'package:myportofolio_mobile/widgets/left_drawer.dart';
 import 'package:myportofolio_mobile/widgets/project_card.dart';
 
@@ -14,7 +15,12 @@ class MyHomePage extends StatelessWidget {
   final String kelas = "PBP D";
 
   final List<ItemHomepage> items = [
-    ItemHomepage("Lihat Proyek", Icons.folder, Colors.red),
+    ItemHomepage(
+      "Lihat Proyek",
+      Icons.folder,
+      Colors.red,
+      destination: (context) => const ProjectListScreen(),
+    ),
     ItemHomepage(
       "Tambah Proyek",
       Icons.add_circle,
@@ -66,9 +72,15 @@ class MyHomePage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Expanded(child: InfoCard(title: 'NPM', content: npm)),
-                Expanded(child: InfoCard(title: 'Name', content: nama)),
-                Expanded(child: InfoCard(title: 'Class', content: kelas)),
+                Expanded(
+                  child: InfoCard(title: 'NPM', content: npm),
+                ),
+                Expanded(
+                  child: InfoCard(title: 'Name', content: nama),
+                ),
+                Expanded(
+                  child: InfoCard(title: 'Class', content: kelas),
+                ),
               ],
             ),
 
